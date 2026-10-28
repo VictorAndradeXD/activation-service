@@ -7,7 +7,7 @@ spring:
     password: activation
     hikari:
       maximum-pool-size: 10
-      connection-timeout: 3s
+      connection-timeout: 3000
   jpa:
     open-in-view: false
     hibernate:
