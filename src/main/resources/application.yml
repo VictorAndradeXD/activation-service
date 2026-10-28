@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: activation-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/activation
+    username: activation
+    password: activation
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 3s
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Keys come from the authorization server's JWKS endpoint; iss and aud are validated besides exp/nbf.
+          issuer-uri: http://localhost:8090/default
+          jwk-set-uri: http://localhost:8090/default/jwks
+          audiences: activation-service
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  task:
+    scheduling:
+      shutdown:
+        await-termination: true
+        await-termination-period: 20s
+
+server:
+  shutdown: graceful
+  error:
+    include-stacktrace: never
+    include-message: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: readinessState,db
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        http.client.requests: true
+
+logging:
+  pattern:
+    correlation: "[%X{traceId:-}] "
+
+app:
+  provider:
+    base-url: http://localhost:8089
+    connect-timeout: 2s
+    read-timeout: 5s
+    api-key: ${PROVIDER_API_KEY:}
+  processing:
+    enabled: true
+    poll-interval: 1s
+    batch-size: 20
+    lease: 30s
+    max-attempts: 5
+    initial-backoff: 2s
+    max-backoff: 5m
