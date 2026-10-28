@@ -2,7 +2,7 @@ spring:
   application:
     name: activation-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/activation
+    url: jdbc:postgresql://localhost:5433/activation
     username: activation
     password: activation
     hikari:

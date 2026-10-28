@@ -1,0 +1,9 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/provider/v1/activate",
+    "bodyPatterns": [{ "matchesJsonPath": { "expression": "$.productCode", "contains": "UNSTABLE" } }]
+  },
+  "response": { "status": 500 }
+}

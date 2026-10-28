@@ -1,0 +1,9 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/provider/v1/activate",
+    "bodyPatterns": [{ "matchesJsonPath": { "expression": "$.productCode", "contains": "SLOW" } }]
+  },
+  "response": { "status": 200, "fixedDelayMilliseconds": 10000 }
+}
