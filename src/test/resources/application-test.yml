@@ -1,0 +1,16 @@
+app:
+  provider:
+    connect-timeout: 500ms
+    read-timeout: 500ms
+  processing:
+    # Tests drive the processor directly (deterministic) instead of waiting for the scheduler.
+    enabled: false
+    lease: 5s
+    max-attempts: 3
+    initial-backoff: 1s
+    max-backoff: 10s
+
+logging:
+  level:
+    root: WARN
+    dev.victorandrade: INFO
